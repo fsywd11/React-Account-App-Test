@@ -1,33 +1,52 @@
-// src/views/Layout.tsx
-import { Outlet, Link } from 'react-router-dom'
+import { TabBar } from 'antd-mobile'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import {
+  BillOutline,
+  CalculatorOutline,
+  AddCircleOutline
+} from 'antd-mobile-icons'
+import './index.scss'
 
-export default function Layout() {
+const tabs = [
+  {
+    key: '/',
+    title: '月度账单',
+    icon: <BillOutline />,
+  },
+  {
+    key: '/new',
+    title: '记账',
+    icon: <AddCircleOutline />,
+  },
+  {
+    key: '/year',
+    title: '年度账单',
+    icon: <CalculatorOutline />,
+  },
+]
+
+const Layout = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-      {/* 👇 导航栏（和你的路由完全对应） */}
-      <nav style={{
-        display: 'flex',
-        gap: '20px',
-        padding: '16px 0',
-        borderBottom: '1px solid #eee',
-        marginBottom: '20px'
-      }}>
-        <h1 style={{ marginRight: 'auto', fontSize: '18px' }}>Layout</h1>
-        <Link to="/home" style={{ textDecoration: 'none', color: '#333' }}>
-          首页
-        </Link>
-        <Link to="/login" style={{ textDecoration: 'none', color: '#333' }}>
-          登录
-        </Link>
-        <Link to="/register" style={{ textDecoration: 'none', color: '#333' }}>
-          注册
-        </Link>
-      </nav>
-
-      {/* 👇 子页面渲染位置（必须有！） */}
-      <div className="page-content">
+    <div className="kaLayout">
+      <div className="page">
+        {/* 二级路由出口 */}
         <Outlet />
       </div>
+
+      <TabBar
+        className="tabbar"
+        activeKey={location.pathname}
+        onChange={key => navigate(key)}
+      >
+        {tabs.map(item => (
+          <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+        ))}
+      </TabBar>
     </div>
   )
 }
+
+export default Layout

@@ -5,9 +5,8 @@ import { lazy, Suspense } from 'react'
 import Layout from '@/pages/Layout/index'
 
 // 懒加载页面（企业必用）
-const Home = lazy(() => import('@/pages/Month/index'))
-const Login = lazy(() => import('@/pages/New/index'))
-const Register = lazy(() => import('@/pages/Year/index'))
+const Home = lazy(() => import('@/pages/MonthBill/index'))
+const Register = lazy(() => import('@/pages/YearBill/index'))
 const NotFound = lazy(() => import('@/pages/NotFound/index'))
 
 // 加载中组件
@@ -22,7 +21,6 @@ export const router = createBrowserRouter([
       { index: true, element: <Navigate to="/home" replace /> },
       { path: '/home', element: <Home /> },
       // 登录注册（无布局）
-      { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
 
       // 404
